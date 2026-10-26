@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>RoadPush 보도 막힘 신고</title>
+<meta name="description" content="보도 사진 한 장으로 통행 가능 폭을 재고 구청에 낼 개선 요청서를 만드는 도구">
+<link rel="preload" href="fonts/roadpush-sans-ui.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%2324272B'/%3E%3Crect x='3' y='6' width='10' height='4' fill='%23F2C200'/%3E%3C/svg%3E">
+</head>
+<body>
+<a class="skip" href="#result">결과로 바로가기</a>
+
+<header class="top">
+  <p class="wrap brand"><b>RoadPush</b> 보도 막힘 신고</p>
+</header>
+
+<main class="wrap layout" id="main">
+  <section class="col-photo" aria-label="사진과 칠하기">
+    <div class="stage" id="stage">
+      <img id="photo" alt="" width="960" height="722">
+      <canvas id="overlay" aria-label="사진 위 통행 가능 구역과 막힌 구역 표시. 칠하기를 켜면 손가락이나 마우스로 막힌 구간 칠하기 가능"></canvas>
+      <div class="busy" id="busy" hidden>
+        <p id="busy-text">분석 준비 중</p>
+        <div class="bar" aria-hidden="true"><span id="busy-bar"></span></div>
+        <button type="button" class="btn-line" id="retry" hidden>다시 시도</button>
+      </div>
+    </div>
+    <p class="cap legend">노랑 통행 가능 / 빗금 막힘 / 점선 보도 후보</p>
+
+    <div class="tools">
+      <div class="seg" role="group" aria-label="칠하기 도구">
+        <button type="button" id="t-paint" aria-pressed="false">막힌 곳 칠하기</button>
+        <button type="button" id="t-erase" aria-pressed="false">지우기</button>
+      </div>
+      <button type="button" class="link" id="t-swap" aria-expanded="false" aria-controls="pick">사진 바꾸기</button>
+    </div>
+    <p class="hint"><span id="hint">막힌 구간 칠하기</span> <button type="button" class="link" id="t-clear">전부 지우기</button></p>
+
+    <div class="pick" id="pick" hidden>
+      <div class="pick-row" id="examples" role="group" aria-label="예시 사진"></div>
+      <label class="btn-line upload" for="file">내 사진 올리기</label>
+      <input type="file" id="file" accept="image/*" class="vh">
+      <p class="cap">사진은 이 기기 안에서만 처리</p>
+    </div>
+  </section>
+
+  <section class="col-side" aria-label="결과와 요청서">
+    <p class="result" id="result" tabindex="-1" role="status" aria-live="polite" aria-atomic="true">
+      <span class="r-label">통행 가능 폭</span>
+      <span class="r-num"><span id="r-num"></span><span id="r-pct">%</span></span>
+      <span class="r-grade" id="r-grade" data-g="">칠하기 전</span>
+    </p>
+
+    <form class="req" id="req" autocomplete="off" novalidate>
+      <h2 class="h2">요청서 내용</h2>
+      <label class="fld">
+        <span>위치</span>
+        <input type="text" id="f-place" required maxlength="80" placeholder="예: 옥천읍 삼금로 금구교 앞 보도">
+      </label>
+      <label class="fld">
+        <span>확인 일시</span>
+        <input type="datetime-local" id="f-when" required>
+      </label>
+      <fieldset class="fld">
+        <legend>제출처</legend>
+        <label class="opt"><input type="radio" name="to" value="gu" checked> 시·군·구청 보행환경 담당</label>
+        <label class="opt"><input type="radio" name="to" value="sinmungo"> 안전신문고 첨부</label>
+      </fieldset>
+      <label class="fld">
+        <span>메모 <span class="muted">(선택)</span></span>
+        <textarea id="f-memo" rows="2" maxlength="200" placeholder="예: 평일 아침마다 차량 주차, 보행보조기 통과 불가"></textarea>
+      </label>
+      <div class="cta">
+        <p class="err" id="f-err" role="alert" hidden></p>
+        <button type="submit" class="btn-main" id="make">요청서 만들기</button>
+      </div>
+    </form>
+
+    <details class="more">
+      <summary>자세히</summary>
+      <div class="more-in" id="basis"></div>
+    </details>
+  </section>
+</main>
+
+<section class="wrap sheet-wrap" id="sheet-wrap" hidden aria-label="만든 요청서">
+  <div class="sheet-bar">
+    <h2 class="h2">요청서</h2>
+    <div class="sheet-act">
+      <button type="button" class="btn-line" id="do-print">인쇄 또는 PDF 저장</button>
+      <button type="button" class="btn-line" id="do-copy">요청 문구 복사</button>
+      <button type="button" class="btn-line" id="do-save">표시 사진 저장</button>
+    </div>
+    <p class="cap" id="act-msg" role="status" aria-live="polite"></p>
+  </div>
+  <article class="sheet" id="sheet"></article>
+</section>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>

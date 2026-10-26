@@ -1,0 +1,230 @@
+{
+ "model": {
+  "name": "SegFormer-b0 (ADE20K, 8비트 양자화)",
+  "file": "model/model_quantized.onnx",
+  "bytes": 4418863,
+  "sha256": "9a98d6daf3d926869ab8cc4c2ed7374a2bc23b889bb7ca3b0915d15e3c4756bb",
+  "license": "NVIDIA Source Code License for SegFormer (연구·평가 목적)"
+ },
+ "runtime": {
+  "name": "onnxruntime-web",
+  "version": "1.26.0-dev.20260410-5e55544225",
+  "license": "MIT",
+  "wasm_bytes": 12930386
+ },
+ "numbers": {
+  "rp_iou_q8_pooled": {
+   "value": 0.638,
+   "unit": "",
+   "ci": [
+    0.587,
+    0.685
+   ],
+   "n": 235
+  },
+  "rp_iou_dummy_pooled": {
+   "value": 0.278,
+   "unit": "",
+   "ci": [
+    0.247,
+    0.311
+   ],
+   "n": 235
+  },
+  "rp_eval_n": {
+   "value": 235,
+   "unit": "장",
+   "ci": null,
+   "n": 235
+  },
+  "rp_model_mb_q8": {
+   "value": 4.4,
+   "unit": "MB",
+   "ci": null,
+   "n": null
+  },
+  "rp_time_q8_1thread_s": {
+   "value": 0.23,
+   "unit": "초",
+   "ci": null,
+   "n": 30
+  },
+  "rp_syn_ac_r_kappa_q8": {
+   "value": 0.62,
+   "unit": "",
+   "ci": [
+    0.47,
+    0.76
+   ],
+   "n": 235
+  },
+  "rp_syn_ax_r_kappa_q8": {
+   "value": 0.82,
+   "unit": "",
+   "ci": [
+    0.62,
+    0.95
+   ],
+   "n": 235
+  }
+ },
+ "examples": [
+  {
+   "id": "kr08",
+   "place": "충북 옥천군 옥천읍 삼금로 금구교",
+   "region": [
+    [
+     0.24,
+     0.62
+    ],
+    [
+     0.62,
+     0.57
+    ],
+    [
+     0.84,
+     0.66
+    ],
+    [
+     0.92,
+     0.79
+    ],
+    [
+     0.58,
+     0.83
+    ],
+    [
+     0.4,
+     0.81
+    ],
+    [
+     0.24,
+     0.76
+    ],
+    [
+     0.24,
+     0.62
+    ]
+   ],
+   "photo": "examples/kr08.jpg",
+   "thumb": "examples/kr08_t.jpg",
+   "labels": "examples/kr08_lab.png",
+   "work": [
+    512,
+    385
+   ],
+   "web": [
+    960,
+    721
+   ],
+   "author": "LandAndTree",
+   "license": "CC0",
+   "source": "https://commons.wikimedia.org/wiki/File:Okcheon_County_Samgeum-ro_Geumgu_Bridge_20240730.jpg",
+   "desc": "옥천 삼금로 금구교 (충청북도 옥천군 옥천읍에서 촬영)",
+   "py_assisted_ratio": 51.967,
+   "py_auto_ratio": 97.515
+  },
+  {
+   "id": "kr04",
+   "place": "경기 안산시 단원구 신길동 정왕신길로",
+   "region": [
+    [
+     0.62,
+     0.58
+    ],
+    [
+     0.86,
+     0.56
+    ],
+    [
+     1.0,
+     0.8
+    ],
+    [
+     1.0,
+     1.0
+    ],
+    [
+     0.62,
+     1.0
+    ],
+    [
+     0.56,
+     0.8
+    ],
+    [
+     0.62,
+     0.58
+    ]
+   ],
+   "photo": "examples/kr04.jpg",
+   "thumb": "examples/kr04_t.jpg",
+   "labels": "examples/kr04_lab.png",
+   "work": [
+    512,
+    384
+   ],
+   "web": [
+    960,
+    720
+   ],
+   "author": "LandAndTree",
+   "license": "CC0",
+   "source": "https://commons.wikimedia.org/wiki/File:Jeongwangsingil-ro,_Singil-dong_20240719.jpg",
+   "desc": "경기도 안산시 단원구 신길동 소재 정왕신길로",
+   "py_assisted_ratio": 95.321,
+   "py_auto_ratio": 97.754
+  },
+  {
+   "id": "kr01",
+   "place": "대전 서구 탄방동 문정로",
+   "region": [
+    [
+     0.05,
+     0.9
+    ],
+    [
+     0.42,
+     0.8
+    ],
+    [
+     0.62,
+     0.84
+    ],
+    [
+     0.8,
+     0.9
+    ],
+    [
+     0.86,
+     1.0
+    ],
+    [
+     0.05,
+     1.0
+    ],
+    [
+     0.05,
+     0.9
+    ]
+   ],
+   "photo": "examples/kr01.jpg",
+   "thumb": "examples/kr01_t.jpg",
+   "labels": "examples/kr01_lab.png",
+   "work": [
+    512,
+    341
+   ],
+   "web": [
+    960,
+    640
+   ],
+   "author": "Treeinkr",
+   "license": "CC BY-SA 4.0",
+   "source": "https://commons.wikimedia.org/wiki/File:Daejeon_Seo-gu_Munjeong-ro_20260315_(01).jpg",
+   "desc": "대전 서구 탄방동 문정로",
+   "py_assisted_ratio": 89.532,
+   "py_auto_ratio": 97.23
+  }
+ ]
+}
