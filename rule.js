@@ -10,7 +10,7 @@
 //
 // 권장 흐름(model_card.md 「도구화」): 보조 입력 모드
 //   1) effectiveRatio() 의 보도 화소(초록)를 처음 제안으로 보여 준다
-//   2) 사용자가 막힌 구간의 보도를 손가락으로 칠한다(캔버스 경로 채우기 → getImageData 알파 > 0 을 region 으로)
+//   2) 사용자가 지나갈 보도 구간을 장애물까지 포함해 손가락으로 칠한다(캔버스 경로 채우기 → getImageData 알파 > 0 을 region 으로)
 //   3) assistedRatio(lab, W, H, region) 의 ratio(면적 비율)와 grade 를 주 결과로 띄운다
 // 합성 시험에서 통과 기준을 넘은 조합은 보조 입력 + 면적 비율뿐이다(사후 선택이라는 점은 model_card 에 적었다).
 

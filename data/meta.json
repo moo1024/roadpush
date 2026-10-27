@@ -44,10 +44,22 @@
    "n": null
   },
   "rp_time_q8_1thread_s": {
-   "value": 0.23,
+   "value": 0.26,
    "unit": "초",
    "ci": null,
-   "n": 30
+   "n": 150
+  },
+  "rp_time_q8_1thread_p10_s": {
+   "value": 0.19,
+   "unit": "초",
+   "ci": null,
+   "n": 150
+  },
+  "rp_time_q8_1thread_p90_s": {
+   "value": 0.28,
+   "unit": "초",
+   "ci": null,
+   "n": 150
   },
   "rp_syn_ac_r_kappa_q8": {
    "value": 0.62,

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>RoadPush 보도 막힘 신고</title>
-<meta name="description" content="보도 사진 한 장으로 통행 가능 폭을 재고 구청에 낼 개선 요청서를 만드는 도구">
+<meta name="description" content="보도 사진 한 장으로 통행 가능 비율을 확인하고 시·군·구청에 낼 개선 요청서를 만드는 도구">
 <link rel="preload" href="fonts/roadpush-sans-ui.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="stylesheet" href="style.css">
@@ -21,7 +21,7 @@
   <section class="col-photo" aria-label="사진과 칠하기">
     <div class="stage" id="stage">
       <img id="photo" alt="" width="960" height="722">
-      <canvas id="overlay" aria-label="사진 위 통행 가능 구역과 막힌 구역 표시. 칠하기를 켜면 손가락이나 마우스로 막힌 구간 칠하기 가능"></canvas>
+      <canvas id="overlay" aria-label="사진 위 통행 가능 구역과 막힌 구역 표시. 칠하기를 켜면 손가락이나 마우스로 지나갈 보도 칠하기 가능"></canvas>
       <div class="busy" id="busy" hidden>
         <p id="busy-text">분석 준비 중</p>
         <div class="bar" aria-hidden="true"><span id="busy-bar"></span></div>
@@ -32,12 +32,12 @@
 
     <div class="tools">
       <div class="seg" role="group" aria-label="칠하기 도구">
-        <button type="button" id="t-paint" aria-pressed="false">막힌 곳 칠하기</button>
+        <button type="button" id="t-paint" aria-pressed="false">보도 칠하기</button>
         <button type="button" id="t-erase" aria-pressed="false">지우기</button>
       </div>
       <button type="button" class="link" id="t-swap" aria-expanded="false" aria-controls="pick">사진 바꾸기</button>
     </div>
-    <p class="hint"><span id="hint">막힌 구간 칠하기</span> <button type="button" class="link" id="t-clear">전부 지우기</button></p>
+    <p class="hint"><span id="hint">지나갈 보도 칠하기, 막은 차와 짐까지 함께</span> <button type="button" class="link" id="t-clear">전부 지우기</button></p>
 
     <div class="pick" id="pick" hidden>
       <div class="pick-row" id="examples" role="group" aria-label="예시 사진"></div>
@@ -49,7 +49,7 @@
 
   <section class="col-side" aria-label="결과와 요청서">
     <p class="result" id="result" tabindex="-1" role="status" aria-live="polite" aria-atomic="true">
-      <span class="r-label">통행 가능 폭</span>
+      <span class="r-label">통행 가능 비율</span>
       <span class="r-num"><span id="r-num"></span><span id="r-pct">%</span></span>
       <span class="r-grade" id="r-grade" data-g="">칠하기 전</span>
     </p>

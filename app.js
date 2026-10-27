@@ -12,16 +12,16 @@ const els = {
 
 // 화면 문구(명사구로 끝낸다)
 const T = {
-  hintPaint: '막힌 구간 칠하기, 막은 차와 짐까지',
+  hintPaint: '지나갈 보도 칠하기, 막은 차와 짐까지 함께',
   hintExample: '미리 칠해 둔 예시 구간, 지우고 다시 칠하기 가능',
   hintNoSidewalk: '보도 인식 부족. 보도가 화면 아래쪽에 오게 다시 촬영하거나 보도 직접 칠하기',
-  hintSmall: '칠한 구간 부족. 막힌 곳 앞뒤 보도까지 넓게 칠하기',
+  hintSmall: '칠한 보도 부족. 막힌 곳 앞뒤 보도까지 넓게 칠하기',
   before: '칠하기 전', unknown: '판정 불가', working: '보도 찾는 중', failed: '분석 실패',
   busyPrep: '분석 준비 중', busyFind: '보도 찾는 중',
   failModel: '분석 실패. 연결 상태 확인 후 다시 시도, 예시 사진은 계속 사용 가능',
   failPhoto: '사진 열기 실패. JPG나 PNG 사진 선택',
   failMeta: '화면 자료 불러오기 실패. 새로고침 필요',
-  errPaint: '막힌 구간 칠하기 필요', errPlace: '위치 입력 필요. 도로명, 건물명, 가까운 정류장 등',
+  errPaint: '지나갈 보도 칠하기 필요', errPlace: '위치 입력 필요. 도로명, 건물명, 가까운 정류장 등',
   copied: '요청 문구 복사 완료', copyBlocked: '복사 차단. 미리보기 글을 길게 눌러 복사',
   saved: '표시 사진 저장 완료',
   legend: '노랑 통행 가능 / 빗금 막힘 / 점선 보도 후보',
@@ -410,7 +410,7 @@ function requestText() {
     `제출처: ${toText(to)}`,
     `위치: ${els.place.value.trim()}`,
     `확인 일시: ${whenText(els.when.value)}`,
-    `통행 가능 폭: ${Math.floor(r.ratio)}% (${r.grade}, 사진에서 칠한 구간 중 막히지 않은 면적 비율)`,
+    `통행 가능 비율: ${Math.floor(r.ratio)}% (${r.grade}, 사진에서 칠한 구간 중 막히지 않은 면적 비율)`,
     `요청 내용: ${ASK}`,
     els.memo.value.trim() ? `현장 메모: ${els.memo.value.trim()}` : '',
     to === 'sinmungo' ? '첨부: 표시 사진 1장' : '',
@@ -431,7 +431,7 @@ function buildSheet() {
       <tr><th scope="row">제출처</th><td>${esc(toText(to))}</td></tr>
       <tr><th scope="row">위치</th><td>${esc(els.place.value.trim())}</td></tr>
       <tr><th scope="row">확인 일시</th><td>${esc(whenText(els.when.value))}</td></tr>
-      <tr><th scope="row">통행 가능 폭</th><td><b>${Math.floor(r.ratio)}%</b> ${esc(r.grade)}
+      <tr><th scope="row">통행 가능 비율</th><td><b>${Math.floor(r.ratio)}%</b> ${esc(r.grade)}
         <span class="note">칠한 구간에서 차, 사람, 기둥, 물건 면적을 뺀 비율. ${G}% 이상 양호, ${Wn}% 이상 ${G}% 미만 주의, ${Wn}% 미만 단절. 도구 설계 기준, 법정 기준과 별개</span></td></tr>
       <tr><th scope="row">사진</th><td><figure><img src="${img}" alt="막힌 구간이 표시된 보도 사진">
         <figcaption>${T.legend}. ${photoCredit()}</figcaption></figure></td></tr>
@@ -477,17 +477,17 @@ function renderBasis() {
     : '요청인이 올린 사진, 이 기기 안에서만 처리';
   els.basis.innerHTML = `
     <div><h3>등급 기준</h3>
-      <p>통행 가능 폭: 칠한 구간 중 장애물이 아닌 면적 ÷ 칠한 구간 면적. ${G}% 이상 양호, ${Wn}% 이상 ${G}% 미만 주의, ${Wn}% 미만 단절.
+      <p>통행 가능 비율: 칠한 구간 중 장애물이 아닌 면적 ÷ 칠한 구간 면적. ${G}% 이상 양호, ${Wn}% 이상 ${G}% 미만 주의, ${Wn}% 미만 단절.
       이 도구의 설계 기준, 법정 보도 유효폭 기준과 별개. 미터 단위 폭이 아닌 면적 비율</p></div>
     <div><h3>성능 근거</h3>
       <ul>
         <li>보도 찾기 정확도 IoU ${fmt(iou.value)}(95% 구간 ${fmt(iou.ci[0])}~${fmt(iou.ci[1])}), 기준선(사진 아래 3분의 1을 보도로 가정) ${fmt(dum.value)}. ADE20K 검증 사진 ${N}장, 해외 공개 데이터</li>
-        <li>칠한 구간 안 장애물 판정의 등급 일치도(카파) ${fmt(kc.value, 2)}(넓게 칠한 경우, 95% 구간 ${fmt(kc.ci[0], 2)}~${fmt(kc.ci[1], 2)}), ${fmt(kx.value, 2)}(정확히 칠한 경우, 95% 구간 ${fmt(kx.ci[0], 2)}~${fmt(kx.ci[1], 2)}). 다른 사진의 차량과 사람을 잘라 붙인 합성 시험</li>
-        <li>모델 ${fmt(n.rp_model_mb_q8.value, 1)}MB, PC CPU 1스레드 1장 ${fmt(n.rp_time_q8_1thread_s.value, 2)}초(휴대폰은 미측정)${state.lastMs ? `, 이 기기 실측 ${(state.lastMs / 1000).toFixed(1)}초` : ''}</li>
+        <li>칠한 구간 안 장애물 판정의 등급 일치도(카파) ${fmt(kc.value, 2)}(넓게 칠한 경우, 95% 구간 ${fmt(kc.ci[0], 2)}~${fmt(kc.ci[1], 2)}), ${fmt(kx.value, 2)}(정확히 칠한 경우, 95% 구간 ${fmt(kx.ci[0], 2)}~${fmt(kx.ci[1], 2)}). 다른 사진의 차량과 사람을 잘라 붙인 합성 시험, 칠한 구간은 정답 보도 영역으로 만든 모의 입력</li>
+        <li>모델 ${fmt(n.rp_model_mb_q8.value, 1)}MB, PC CPU 1스레드 1장 중앙값 ${fmt(n.rp_time_q8_1thread_s.value, 2)}초(10~90% 범위 ${fmt(n.rp_time_q8_1thread_p10_s.value, 2)}~${fmt(n.rp_time_q8_1thread_p90_s.value, 2)}초, 휴대폰은 미측정)${state.lastMs ? `, 이 기기 실측 ${(state.lastMs / 1000).toFixed(1)}초` : ''}</li>
       </ul></div>
     <div><h3>한계</h3>
       <ul>
-        <li>사진만으로 매긴 자동 등급은 시험 기준 미달. 그래서 막힌 구간은 사람이 칠하는 방식</li>
+        <li>사진만으로 매긴 자동 등급은 시험 기준 미달. 그래서 지나갈 보도 구간은 사람이 칠하고, 그 안에서 막은 물체를 AI가 찾는 방식</li>
         <li>한국 보도 사진 정량 평가는 다음 단계. 예시 사진은 눈으로 확인한 결과</li>
         <li>합성 시험은 실제 불법주차 성능이 아니며, 단절 사례는 검증 전</li>
         <li>눈 덮인 보도, 차도와 높이 차가 없는 보도는 보도 후보 누락 사례. 노점 매대는 장애물 판정 대상 밖</li>
